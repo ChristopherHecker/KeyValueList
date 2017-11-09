@@ -1,0 +1,78 @@
+﻿<!-- (c) 2017 Chris Hecker. -->
+@model KVmodel
+@{
+	ViewData["Title"] = "KeyValueList Home";
+}
+<h2>Key List Value Application</h2>
+
+<h5>Enter a key and value separated by '='</h5>
+
+<style>
+	td {
+		text-align: center;
+		padding: 15px;
+	}
+</style>
+
+<div id="contentBox" style="display: table; width:100%">
+
+	<div style="display: table-row; width: 100%">
+		<div id="column1" style="width:30%; display: table-cell; border: 1px">
+			@using (Html.BeginForm("Add", "Home", FormMethod.Post))
+			{
+				@Html.Label("Key/Value Pair")
+				<br/>
+				@Html.TextBoxFor(m => m.Text, "Key/Value Pair")
+				<br />
+				<input type="submit" value="Add" />
+			}
+			<br/>
+			<br/>
+			@using (Html.BeginForm("ExportToJson", "Home", FormMethod.Post))
+			{
+				@Html.Label("JSON Filename")
+				<br />
+				@Html.TextBoxFor(m => m.Text, "JSON Filename")
+				<br />
+				<input type="submit" value="Export To Json" />
+			}
+			<br />
+			<br />
+			@using (Html.BeginForm("ExportToXml", "Home", FormMethod.Post))
+			{
+				@Html.Label("XML Filename")
+				<br />
+				@Html.TextBoxFor(m => m.Text, "XML Filename")
+				<br/>
+				<input type="submit" value="Export To Xml" />
+			}
+		</div>
+
+		<div id="column2" style="width:30%; display: table-cell; border: 3px black">
+			<table style="vertical-align:top">
+				<tr>
+					<td><button type="button" title="Clear" style="width:150px" onclick="location.href='@Url.Action("Clear")'">Clear</button></td>
+				</tr>
+				<tr>
+					<td><button type="button" title="Sort by Name" style="width:150px" onclick="location.href='@Url.Action("SortByName")'">Sort by Name</button></td>
+				</tr>
+				<tr>
+					<td><button type="button" title="Sort by Value" style="width:150px" onclick="location.href='@Url.Action("SortByValue")'">Sort by Value</button></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="column3" style="width:30%; display: table-cell; border: 3px black">
+			<br/>
+			@using (Html.BeginForm("RemoveSelected", "Home", FormMethod.Post))
+			{
+				@Html.ListBoxFor(m => m.Strings, Model.Items, new { @style = "width: 100%; height: 230px" })
+				<br/>
+				<br/>
+				<input type="submit" value="Remove Selected" />
+			}
+		</div>
+
+	</div>
+
+</div>
